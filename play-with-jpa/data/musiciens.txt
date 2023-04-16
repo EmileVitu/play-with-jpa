@@ -66,4 +66,5 @@ Gabriel, Paul, Julia, Léa, Jean, Léo, Ines, Théo, Louis, Emma
 # Concert de Noël
 Date : 26/12/2020 à 19h
 Lieu : Théâtre Gérard Philippe (Saint Denis)
-Orchestre Figaro 
+Orchestre Figaro
+la
