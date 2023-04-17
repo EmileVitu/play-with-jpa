@@ -2,9 +2,17 @@ package org.vitu.jpa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.vitu.jpa.model.util.TypeInstrument;
 
+
+@Entity
 public class Instrument implements Serializable {
+	
+	@Id
+	private int id;
 	
 	private String nom;
 	private TypeInstrument type;
@@ -33,9 +41,17 @@ public class Instrument implements Serializable {
 		this.type = type;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Instrument [nom=" + nom + ", type=" + type + "]";
+		return "Instrument [id=" + id + ", nom=" + nom + ", type=" + type + "]";
 	}
 	
 }
