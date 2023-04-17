@@ -1,11 +1,16 @@
 package org.vitu.jpa.model;
 
+import java.io.Serializable;
+
 import org.vitu.jpa.model.util.TypeInstrument;
 
-public class Instrument {
+public class Instrument implements Serializable {
 	
 	private String nom;
 	private TypeInstrument type;
+	
+	public Instrument() {
+	}
 
 	public Instrument(String nom, TypeInstrument type) {
 		this.nom = nom;
