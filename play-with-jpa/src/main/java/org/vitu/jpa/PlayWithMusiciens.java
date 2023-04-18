@@ -8,6 +8,8 @@ public class PlayWithMusiciens {
 	public static void main(String[] args) {
 		
 		Instrument instrument = new Instrument("Violon", TypeInstrument.CORDES);
+		
+		System.out.println("Instrument = " + instrument);
 
 	}
 }
