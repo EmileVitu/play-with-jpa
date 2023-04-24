@@ -17,8 +17,6 @@ public class Musicien implements Serializable {
 	
 	@Column(length = 80, nullable = false)
 	private String nom;
-
-	
 	
 	public Musicien() {
 	}
