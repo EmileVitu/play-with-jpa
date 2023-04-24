@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 import org.vitu.jpa.model.Instrument;
 import org.vitu.jpa.model.util.TypeInstrument;
 
-public class PlayWithMusiciens {
+public class CreateInstruments {
 
 	public static void main(String[] args) {
 		

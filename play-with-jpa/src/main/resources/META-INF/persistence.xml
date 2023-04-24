@@ -27,7 +27,7 @@
 			
 			<!-- validate | update | create | create-drop -->
 			<property name="hibernate.hbm2ddl.auto" 
-					  value="create" />
+					  value="validate" />
 			
 			<!-- https://www.youtube.com/watch?v=FjmuClV40A4 -->
 			<property name="hibernate.show_sql" value="true" />
