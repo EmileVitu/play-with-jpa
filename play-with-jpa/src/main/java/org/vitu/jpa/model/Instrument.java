@@ -3,6 +3,8 @@ package org.vitu.jpa.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.vitu.jpa.model.util.TypeInstrument;
@@ -11,7 +13,7 @@ import org.vitu.jpa.model.util.TypeInstrument;
 @Entity
 public class Instrument implements Serializable {
 	
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int id;
 	
 	private String nom;
