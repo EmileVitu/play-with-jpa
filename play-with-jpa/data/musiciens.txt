@@ -1,17 +1,3 @@
-# Instruments
-Violon       cordes
-Violoncelle  cordes
-Contrebasse  cordes
-Flûte        vent
-Clarinette   bois
-Hautbois     bois
-Saxophone    bois
-Basson       bois
-Trompette    cuivre
-Harpe        cordes pincées
-Piano        cordes frappées
-Timbales     percussion
-
 # Musiciens
 MR  Gabriel  Violon Violoncelle
 MRS Anna     Violoncelle
@@ -33,37 +19,3 @@ MR  Victor   Flûte Timbales
 MRS Zoe      Violon
 MR  Jean     Clarinette
 MRS Julia    Flûte
-
-# Professeurs
-Gabriel  Violon
-Anna     Violoncelle
-Paul     Contrebasse
-Julia    Flûte
-Léo      Clarinette
-Rebecca  Hautbois
-Sacha    Saxophone
-Sarah    Basson
-Théo     Trompette
-Alice    Harpe
-Lucas    Piano
-Ines     Timbales
-
-# Orchestre 1
-Orchestre Titus
-Directeur : Anna
-Gabriel, Emma, Jade, Ines, Zoe, Sarah, Victor, Raphaël, Sacha, Alice
-
-# Orchestre 2
-Orchestre Fidelio
-Directeur : Raphaël
-Jade, Zoe, Anna, Sacha, Julia, Rebecca, Jean, Léo, Théo, Lucas, Victor
-
-# Orchestre 3
-Orchestre Figaro
-Directeur : Alice
-Gabriel, Paul, Julia, Léa, Jean, Léo, Ines, Théo, Louis, Emma
-
-# Concert de Noël
-Date : 26/12/2020 à 19h
-Lieu : Théâtre Gérard Philippe (Saint Denis)
-Orchestre Figaro

@@ -1,0 +1,13 @@
+# Instruments
+Violon       cordes
+Violoncelle  cordes
+Contrebasse  cordes
+Flûte        vent
+Clarinette   bois
+Hautbois     bois
+Saxophone    bois
+Basson       bois
+Trompette    cuivre
+Harpe        cordes pincées
+Piano        cordes frappées
+Timbales     percussion
