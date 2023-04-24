@@ -11,6 +11,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 import org.vitu.jpa.model.Instrument;
 import org.vitu.jpa.model.Musicien;
 import org.vitu.jpa.model.util.TypeInstrument;
@@ -23,6 +28,19 @@ public class MusiciensAndInstruments {
 		
 		List<Instrument> instruments = readInstrument();
 		List<Musicien> musiciens = readMusiciens();
+		
+		musiciens.forEach(System.out::println);
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("play-with-jpa");
+		System.out.println("EMF = " + emf);
+		
+		EntityManager entityManager = emf.createEntityManager();
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		
+		transaction.begin();
+		musiciens.forEach(entityManager::persist);
+		transaction.commit();
 		
 		musiciens.forEach(System.out::println);
 		
@@ -48,7 +66,7 @@ public class MusiciensAndInstruments {
 			instruments =
 				instrumentLines
 					.filter(line -> !line.startsWith("#"))
-					.map(line -> lineToInstrument.apply(line))
+					.map(lineToInstrument)
 					.collect(Collectors.toList());
 			
 		} catch (IOException e) {
@@ -62,12 +80,12 @@ public class MusiciensAndInstruments {
 		Function<String, Musicien> lineToMusicien = 
 				line -> {
 					String[] split = line.split("[ ]+");
-					String nom = split[0];
+					String nom = split[1];
 					Musicien musicien = new Musicien(nom);
-					String[] nomInstruments = Arrays.copyOfRange(split, 1, split.length);
+					String[] nomInstruments = Arrays.copyOfRange(split, 2, split.length);
 					Arrays.stream(nomInstruments)
 						.map(nomInstrument -> registryInstrument.get(nomInstrument))
-						.forEach(instrument -> musicien.addInstrument(instrument));
+						.forEach(musicien::addInstrument);
 					return musicien;
 				};
 				
@@ -79,7 +97,7 @@ public class MusiciensAndInstruments {
 			musiciens =
 				musiciensLines
 					.filter(line -> !line.startsWith("#"))
-					.map(line -> lineToMusicien.apply(line))
+					.map(lineToMusicien)
 					.collect(Collectors.toList());
 			
 		} catch (IOException e) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Musicien implements Serializable {
 	@Column(length = 80, nullable = false)
 	private String nom;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Instrument> instruments = new HashSet<>();
 	
 	public Musicien() {
