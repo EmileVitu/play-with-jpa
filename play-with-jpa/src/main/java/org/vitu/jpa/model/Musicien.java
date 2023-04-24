@@ -26,6 +26,10 @@ public class Musicien implements Serializable {
 	public Musicien() {
 	}
 
+	public boolean addInstrument(Instrument instrument) {
+		return this.instruments.add(instrument);
+	}
+	
 	public Musicien(String nom) {
 		this.nom = nom;
 	}
@@ -48,7 +52,7 @@ public class Musicien implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Musicien [id=" + id + ", nom=" + nom + "]";
+		return "Musicien [id=" + id + ", nom=" + nom + ", instruments=" + instruments + "]";
 	}
 	
 }
