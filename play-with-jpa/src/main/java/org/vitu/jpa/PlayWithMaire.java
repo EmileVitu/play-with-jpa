@@ -5,12 +5,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.vitu.jpa.model.Commune;
 
 public class PlayWithMaire {
 
+	private static Map<String, Commune> communes = new HashMap<>();
+	
 	public static void main(String... args) {
+		
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		entityManager.getTransaction().begin();
 		
 		Path path = Path.of("base-commune/maires-25-04-2014.csv");
 		try(BufferedReader reader = Files.newBufferedReader(path);) {
@@ -42,24 +55,17 @@ public class PlayWithMaire {
 				Commune previousCommune = communes.put(codePostal, commune);
 				if (previousCommune != null) {
 					System.out.println("Doublon = " + previousCommune);
-				} else {
-					preparedStatement.setString(1, codePostal);
-					preparedStatement.setString(2, nom);
-					preparedStatement.addBatch();
 				}
-								
 				line = reader.readLine();
-			
 			}
-			System.out.println("Executing barch");
-			int[] counts = preparedStatement.executeBatch();
-			System.out.println("Done batch");
-			
-			int count = Arrays.stream(counts).sum();
-			System.out.println("Nombre de communes créées = " + count);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		
+		entityManager.getTransaction().begin();
+		communes.values().forEach(entityManager::persist);
+		entityManager.getTransaction().commit();
+		System.out.println("Persisted " + communes.size() + " communes.");
 		
 	}
 	
