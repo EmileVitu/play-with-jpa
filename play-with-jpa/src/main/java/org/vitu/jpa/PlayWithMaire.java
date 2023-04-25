@@ -20,10 +20,8 @@ public class PlayWithMaire {
 	
 	public static void main(String... args) {
 		
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("play-with-jpa");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		
-		entityManager.getTransaction().begin();
 		
 		Path path = Path.of("base-commune/maires-25-04-2014.csv");
 		try(BufferedReader reader = Files.newBufferedReader(path);) {
@@ -65,8 +63,6 @@ public class PlayWithMaire {
 		entityManager.getTransaction().begin();
 		communes.values().forEach(entityManager::persist);
 		entityManager.getTransaction().commit();
-		System.out.println("Persisted " + communes.size() + " communes.");
-		
-	}
-	
+		System.out.println("Persisted " + communes.size() + " communes.");	
+	}	
 }
