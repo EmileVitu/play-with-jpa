@@ -2,14 +2,16 @@ package org.vitu.jpa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class Commune implements Serializable {
 
-	@Id
+	@Id@Column(length = 80)
 	private String nom;
+	@Column(length = 8)
 	private String codePostal;
 
 	public Commune() {

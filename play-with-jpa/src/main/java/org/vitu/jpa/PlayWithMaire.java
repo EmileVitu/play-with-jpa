@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,14 +15,22 @@ import org.vitu.jpa.model.Commune;
 
 public class PlayWithMaire {
 
-	private static Map<String, Commune> communes = new HashMap<>();
-	
 	public static void main(String... args) {
 		
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("play-with-jpa");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
-		Path path = Path.of("base-commune/maires-25-04-2014.csv");
+		Map<String, Commune> communes = readCommunes("base-commune/maires-25-04-2014.csv");
+		
+		entityManager.getTransaction().begin();
+		communes.values().forEach(entityManager::persist);
+		entityManager.getTransaction().commit();
+		System.out.println("Persisted " + communes.size() + " communes.");	
+	}
+
+	private static Map<String, Commune> readCommunes(String fileName) {
+		Map<String, Commune> communes = new HashMap<>();
+		Path path = Path.of(fileName);
 		try(BufferedReader reader = Files.newBufferedReader(path);) {
 			
 			String line = reader.readLine();
@@ -33,19 +40,7 @@ public class PlayWithMaire {
 				
 				String[] split = line.split(";");
 				
-				String codeDepartement = split[0];
-				if (codeDepartement.length() == 1) {
-					codeDepartement = "0" + codeDepartement;
-				}
-				
-				String codeInsee = split[2];
-				if (codeInsee.length() == 1) {
-					codeInsee = "00" + codeInsee;
-				} else if (codeInsee.length() == 2) {
-					codeInsee = "0" + codeInsee;
-				}
-				
-				String codePostal = codeDepartement + codeInsee;
+				String codePostal = readCodePostal(line);
 				String nom = split[3];
 				
 				Commune commune = new Commune(codePostal, nom);
@@ -59,10 +54,24 @@ public class PlayWithMaire {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		return communes;
+	}
+
+	private static String readCodePostal(String line) {
+		String[] split = line.split(";");
+		String codeDepartement = split[0];
+		if (codeDepartement.length() == 1) {
+			codeDepartement = "0" + codeDepartement;
+		}
 		
-		entityManager.getTransaction().begin();
-		communes.values().forEach(entityManager::persist);
-		entityManager.getTransaction().commit();
-		System.out.println("Persisted " + communes.size() + " communes.");	
+		String codeInsee = split[2];
+		if (codeInsee.length() == 1) {
+			codeInsee = "00" + codeInsee;
+		} else if (codeInsee.length() == 2) {
+			codeInsee = "0" + codeInsee;
+		}
+		
+		String codePostal = codeDepartement + codeInsee;
+		return codePostal;
 	}	
 }
