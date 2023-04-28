@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.vitu.jpa.model.Commune;
+import org.vitu.jpa.model.Maire;
 import org.vitu.jpa.model.util.Civilite;
 
 public class PlayWithMaire {
@@ -22,11 +23,13 @@ public class PlayWithMaire {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 		Map<String, Commune> communes = readCommunes("base-commune/maires-25-04-2014.csv");
+		Map<String, Maire> maires = readMaires("base-commune/maires-25-04-2014.csv");
 		
-		entityManager.getTransaction().begin();
-		communes.values().forEach(entityManager::persist);
-		entityManager.getTransaction().commit();
-		System.out.println("Persisted " + communes.size() + " communes.");	
+//		entityManager.getTransaction().begin();
+//		communes.values().forEach(entityManager::persist);
+//		entityManager.getTransaction().commit();
+		System.out.println("Persisted " + communes.size() + " communes.");
+		System.out.println("Persisted " + maires.size() + " maires.");
 	}
 
 	private static Map<String, Commune> readCommunes(String fileName) {
@@ -58,8 +61,8 @@ public class PlayWithMaire {
 		return communes;
 	}
 
-	private static Map<String, Commune> readMaires(String fileName) {
-		Map<String, Maire> communes = new HashMap<>();
+	private static Map<String, Maire> readMaires(String fileName) {
+		Map<String, Maire> maires = new HashMap<>();
 		Path path = Path.of(fileName);
 		try(BufferedReader reader = Files.newBufferedReader(path);) {
 			
@@ -74,20 +77,20 @@ public class PlayWithMaire {
 				String nom = split[5];
 				String prenom = split[6];
 				Civilite civilite = Civilite.of(split[7]);
-				Date dateDeNaissance = split[8];
+				String dateDeNaissance = split[8];
 				
-				Maire maire = new Maire(codePostal, nom);
+				Maire maire = new Maire(nom, prenom, civilite, dateDeNaissance);
 				
-				Commune previousCommune = communes.put(codePostal, commune);
-				if (previousCommune != null) {
-					System.out.println("Doublon = " + previousCommune);
+				Maire previousMaire = maires.put(codePostal, maire);
+				if (previousMaire != null) {
+					System.out.println("Doublon = " + previousMaire);
 				}
 				line = reader.readLine();
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		return communes;
+		return maires;
 	}
 	
 	private static String readCodePostal(String line) {

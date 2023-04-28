@@ -15,12 +15,12 @@ public enum Civilite {
 		this.label = label;
 	}
 	
-	Civilite of(String label) {
+	public static Civilite of(String label) {
 		
 		return Arrays.stream(values())
 				.filter(civilite -> civilite.label.equals(label))
 				.findAny()
-				.orElseThrow(() -> new NoSuchElementException("Pas de civilité pour " + label));
+				.orElseThrow(() -> new NoSuchElementException("Pas de civilité pour : " + label));
 		
 //		for(Civilite civilite : values()) {
 //			if(civilite.label.equals(label)) {
