@@ -57,6 +57,38 @@ public class PlayWithMaire {
 		return communes;
 	}
 
+	private static Map<String, Commune> readMaires(String fileName) {
+		Map<String, Maire> communes = new HashMap<>();
+		Path path = Path.of(fileName);
+		try(BufferedReader reader = Files.newBufferedReader(path);) {
+			
+			String line = reader.readLine();
+			line = reader.readLine();
+			
+			while (line != null) {
+				
+				String[] split = line.split(";");
+				
+				String codePostal = readCodePostal(line);
+				String nom = split[5];
+				String prenom = split[6];
+				Civilite civilite = split[7];
+				Date dateDeNaissance = split[8];
+				
+				Maire maire = new Maire(codePostal, nom);
+				
+				Commune previousCommune = communes.put(codePostal, commune);
+				if (previousCommune != null) {
+					System.out.println("Doublon = " + previousCommune);
+				}
+				line = reader.readLine();
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		return communes;
+	}
+	
 	private static String readCodePostal(String line) {
 		String[] split = line.split(";");
 		String codeDepartement = split[0];
