@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.vitu.jpa.model.Commune;
+import org.vitu.jpa.model.util.Civilite;
 
 public class PlayWithMaire {
 
@@ -72,7 +73,7 @@ public class PlayWithMaire {
 				String codePostal = readCodePostal(line);
 				String nom = split[5];
 				String prenom = split[6];
-				Civilite civilite = split[7];
+				Civilite civilite = Civilite.of(split[7]);
 				Date dateDeNaissance = split[8];
 				
 				Maire maire = new Maire(codePostal, nom);
