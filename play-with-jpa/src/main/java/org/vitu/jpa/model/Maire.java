@@ -1,6 +1,7 @@
 package org.vitu.jpa.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
+import org.eclipse.persistence.internal.jpa.parsing.TemporalLiteralNode.TemporalType;
 import org.vitu.jpa.model.util.Civilite;
 
 @Entity
@@ -28,12 +31,13 @@ public class Maire implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Civilite civilite;
 	
-	private String dateDeNaissance;
+	//@Temporal(TemporalType.DATE)
+	private Date dateDeNaissance;
 	
 	public Maire() {
 	}
 
-	public Maire(String nom, String prenom, Civilite civilite, String dateDeNaissance) {
+	public Maire(String nom, String prenom, Civilite civilite, Date dateDeNaissance) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.civilite = civilite;
@@ -72,11 +76,11 @@ public class Maire implements Serializable {
 		this.civilite = civilite;
 	}
 
-	public String getDateDeNaissance() {
+	public Date getDateDeNaissance() {
 		return dateDeNaissance;
 	}
 
-	public void setDateDeNaissance(String dateDeNaissance) {
+	public void setDateDeNaissance(Date dateDeNaissance) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 

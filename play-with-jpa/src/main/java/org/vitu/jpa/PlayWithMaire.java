@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +82,9 @@ public class PlayWithMaire {
 				String nom = split[5];
 				String prenom = split[6];
 				Civilite civilite = Civilite.of(split[7]);
-				String dateDeNaissance = split[8];
+				
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");				
+				Date dateDeNaissance = dateFormat.parse(split[8]);
 				
 				Maire maire = new Maire(nom, prenom, civilite, dateDeNaissance);
 				
@@ -87,7 +94,7 @@ public class PlayWithMaire {
 				}
 				line = reader.readLine();
 			}
-		} catch(IOException e) {
+		} catch(IOException | ParseException e) {
 			e.printStackTrace();
 		}
 		return maires;
