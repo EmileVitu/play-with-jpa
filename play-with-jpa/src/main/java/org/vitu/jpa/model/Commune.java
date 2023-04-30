@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -18,6 +20,9 @@ public class Commune implements Serializable {
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Maire maire;
+	
+	@ManyToOne
+	private Departement departement;
 
 	public Commune() {
 	}
@@ -50,7 +55,19 @@ public class Commune implements Serializable {
 	public void setMaire(Maire maire) {
 		this.maire = maire;
 	}
+	
+	public Departement getDepartement() {
+		return departement;
+	}
 
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+	}
+
+	public String getCodeDepartement() {
+		return codePostal.substring(0, 2);
+	}
+	
 	@Override
 	public String toString() {
 		return "Commune [nom=" + nom + ", codePostal=" + codePostal + ", maire=" + maire + "]";

@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.vitu.jpa.model.Commune;
+import org.vitu.jpa.model.Departement;
 import org.vitu.jpa.model.Maire;
 import org.vitu.jpa.model.util.Civilite;
 
@@ -28,18 +29,25 @@ public class PlayWithMaire {
 		
 		Map<String, Commune> communes = readCommunes("base-commune/maires-25-04-2014.csv");
 		Map<String, Maire> maires = readMaires("base-commune/maires-25-04-2014.csv");
+		Map<String, Departement> departements = readDepartements("base-commune/departement.csv");
 		
 		for(Commune commune : communes.values()) {
 			Maire maire = maires.get(commune.getCodePostal());
 			commune.setMaire(maire);
+			
+			String codeDepartement = commune.getCodeDepartement();
+			Departement departement = departements.get(codeDepartement);
+			departement.addCommune(commune);
 		}
 		
 		entityManager.getTransaction().begin();
 		communes.values().forEach(entityManager::persist);
+		departements.values().forEach(entityManager::persist);
 		entityManager.getTransaction().commit();
 		
 		System.out.println("Persisted " + communes.size() + " communes.");
 		System.out.println("Persisted " + maires.size() + " maires.");
+		System.out.println("Persisted " + departements.size() + " départements.");
 	}
 
 	private static Map<String, Commune> readCommunes(String fileName) {
@@ -105,6 +113,32 @@ public class PlayWithMaire {
 		}
 		return maires;
 	}
+	
+	private static Map<String, Departement> readDepartements(String fileName) {
+		Map<String, Departement> departements = new HashMap<>();
+		Path path = Path.of(fileName);
+		try(BufferedReader reader = Files.newBufferedReader(path);) {
+			
+			String line = reader.readLine();
+			line = reader.readLine();
+			while (line != null) {
+				
+				String[] split = line.split(";");
+				
+				String codeDepartement = readCodeDepartement(line);
+				String nom = split[1];
+				
+				Departement departement = new Departement(codeDepartement, nom);
+				
+				departements.put(codeDepartement, departement);
+				
+				line = reader.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return departements;
+	}
 
 	private static String readCodePostal(String line) {
 		String[] split = line.split(";");
@@ -122,5 +156,14 @@ public class PlayWithMaire {
 		
 		String codePostal = codeDepartement + codeInsee;
 		return codePostal;
+	}
+	
+	private static String readCodeDepartement(String line) {
+		String[] split = line.split(";");
+		String codeDepartement = split[0];
+		if (codeDepartement.length() == 1) {
+			codeDepartement = "0" + codeDepartement;
+		}
+		return codeDepartement;
 	}
 }
