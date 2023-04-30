@@ -29,20 +29,17 @@ public class PlayWithMaire {
 		Map<String, Commune> communes = readCommunes("base-commune/maires-25-04-2014.csv");
 		Map<String, Maire> maires = readMaires("base-commune/maires-25-04-2014.csv");
 		
-		System.out.println(maires);
-		
 		for(Commune commune : communes.values()) {
 			Maire maire = maires.get(commune.getCodePostal());
 			commune.setMaire(maire);
-			System.out.println(commune + " - " + maire);
 		}
 		
 		entityManager.getTransaction().begin();
 		communes.values().forEach(entityManager::persist);
 		entityManager.getTransaction().commit();
 		
-//		System.out.println("Persisted " + communes.size() + " communes.");
-//		System.out.println("Persisted " + maires.size() + " maires.");
+		System.out.println("Persisted " + communes.size() + " communes.");
+		System.out.println("Persisted " + maires.size() + " maires.");
 	}
 
 	private static Map<String, Commune> readCommunes(String fileName) {
