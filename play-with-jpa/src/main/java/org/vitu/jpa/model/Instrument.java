@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import org.vitu.jpa.model.util.TypeInstrument;
 
 
-@Entity
+// @Entity
 public class Instrument implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)

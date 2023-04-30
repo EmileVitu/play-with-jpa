@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.GenerationType;
 
-@Entity
+// @Entity
 public class Musicien implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)

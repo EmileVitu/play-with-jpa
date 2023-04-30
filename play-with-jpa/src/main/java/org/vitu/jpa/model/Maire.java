@@ -31,7 +31,7 @@ public class Maire implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Civilite civilite;
 	
-	//@Temporal(TemporalType.DATE)
+//	@Temporal(TemporalType.DATE)
 	private Date dateDeNaissance;
 	
 	public Maire() {

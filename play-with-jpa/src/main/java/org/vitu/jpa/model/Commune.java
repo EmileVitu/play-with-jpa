@@ -2,17 +2,22 @@ package org.vitu.jpa.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Commune implements Serializable {
 
-	@Id@Column(length = 80)
-	private String nom;
-	@Column(length = 8)
+	@Id@Column(length = 8)
 	private String codePostal;
+	@Column(length = 80)
+	private String nom;
+
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Maire maire;
 
 	public Commune() {
 	}
@@ -37,9 +42,17 @@ public class Commune implements Serializable {
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
+	
+	public Maire getMaire() {
+		return maire;
+	}
+
+	public void setMaire(Maire maire) {
+		this.maire = maire;
+	}
 
 	@Override
 	public String toString() {
-		return "Commune [nom=" + nom + ", codePostal=" + codePostal + "]";
+		return "Commune [nom=" + nom + ", codePostal=" + codePostal + ", maire=" + maire + "]";
 	}
 }

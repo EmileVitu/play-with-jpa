@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +29,20 @@ public class PlayWithMaire {
 		Map<String, Commune> communes = readCommunes("base-commune/maires-25-04-2014.csv");
 		Map<String, Maire> maires = readMaires("base-commune/maires-25-04-2014.csv");
 		
-//		entityManager.getTransaction().begin();
-//		communes.values().forEach(entityManager::persist);
-//		entityManager.getTransaction().commit();
-		System.out.println("Persisted " + communes.size() + " communes.");
-		System.out.println("Persisted " + maires.size() + " maires.");
+		System.out.println(maires);
+		
+		for(Commune commune : communes.values()) {
+			Maire maire = maires.get(commune.getCodePostal());
+			commune.setMaire(maire);
+			// System.out.println(commune + " - " + maire);
+		}
+		
+		entityManager.getTransaction().begin();
+		communes.values().forEach(entityManager::persist);
+		entityManager.getTransaction().commit();
+		
+//		System.out.println("Persisted " + communes.size() + " communes.");
+//		System.out.println("Persisted " + maires.size() + " maires.");
 	}
 
 	private static Map<String, Commune> readCommunes(String fileName) {
@@ -83,9 +91,9 @@ public class PlayWithMaire {
 				String prenom = split[6];
 				Civilite civilite = Civilite.of(split[7]);
 				
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");				
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				Date dateDeNaissance = dateFormat.parse(split[8]);
-				
+
 				Maire maire = new Maire(nom, prenom, civilite, dateDeNaissance);
 				
 				Maire previousMaire = maires.put(codePostal, maire);
@@ -93,13 +101,14 @@ public class PlayWithMaire {
 					System.out.println("Doublon = " + previousMaire);
 				}
 				line = reader.readLine();
+				System.out.println(maire);
 			}
 		} catch(IOException | ParseException e) {
 			e.printStackTrace();
 		}
 		return maires;
 	}
-	
+
 	private static String readCodePostal(String line) {
 		String[] split = line.split(";");
 		String codeDepartement = split[0];
@@ -116,5 +125,5 @@ public class PlayWithMaire {
 		
 		String codePostal = codeDepartement + codeInsee;
 		return codePostal;
-	}	
+	}
 }
