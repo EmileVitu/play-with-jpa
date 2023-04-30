@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 import org.eclipse.persistence.internal.jpa.parsing.TemporalLiteralNode.TemporalType;
@@ -30,6 +31,9 @@ public class Maire implements Serializable {
 	@Column(length = 5)
 	@Enumerated(EnumType.STRING)
 	private Civilite civilite;
+	
+	@OneToOne(mappedBy = "maire")
+	private Commune commune;
 	
 //	@Temporal(TemporalType.DATE)
 	private Date dateDeNaissance;

@@ -98,7 +98,7 @@ public class PlayWithMaire {
 					System.out.println("Doublon = " + previousMaire);
 				}
 				line = reader.readLine();
-				System.out.println(maire);
+
 			}
 		} catch(IOException | ParseException e) {
 			e.printStackTrace();
