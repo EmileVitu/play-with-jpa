@@ -34,7 +34,7 @@ public class PlayWithMaire {
 		for(Commune commune : communes.values()) {
 			Maire maire = maires.get(commune.getCodePostal());
 			commune.setMaire(maire);
-			// System.out.println(commune + " - " + maire);
+			System.out.println(commune + " - " + maire);
 		}
 		
 		entityManager.getTransaction().begin();
@@ -60,7 +60,7 @@ public class PlayWithMaire {
 				String codePostal = readCodePostal(line);
 				String nom = split[3];
 				
-				Commune commune = new Commune(codePostal, nom);
+				Commune commune = new Commune(nom, codePostal);
 				
 				Commune previousCommune = communes.put(codePostal, commune);
 				if (previousCommune != null) {
