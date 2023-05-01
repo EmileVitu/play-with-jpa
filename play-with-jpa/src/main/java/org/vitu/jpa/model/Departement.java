@@ -51,6 +51,10 @@ public class Departement implements Serializable {
 		commune.setDepartement(this);
 	}
 	
+	public List<Commune> getCommunes() {
+		return new ArrayList<>(this.communes);
+	}
+	
 	@Override
 	public String toString() {
 		return "Departement [codeDepartement=" + codeDepartement + ", nom=" + nom + "]";
