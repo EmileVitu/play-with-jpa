@@ -18,7 +18,8 @@ public class Commune implements Serializable {
 	@Column(length = 80)
 	private String nom;
 
-	@OneToOne(cascade = CascadeType.PERSIST, mappedBy = "commune")
+	// @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "commune")
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Maire maire;
 	
 	@ManyToOne

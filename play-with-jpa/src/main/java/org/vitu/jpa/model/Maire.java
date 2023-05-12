@@ -39,7 +39,7 @@ public class Maire implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Civilite civilite;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.PERSIST, mappedBy = "maire")
 	private Commune commune;
 	
 //	@Temporal(TemporalType.DATE)
