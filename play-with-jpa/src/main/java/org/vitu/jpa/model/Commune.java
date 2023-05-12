@@ -23,13 +23,16 @@ public class Commune implements Serializable {
 	
 	@ManyToOne
 	private Departement departement;
+	
+	private int population;
 
 	public Commune() {
 	}
 
-	public Commune(String nom, String codePostal) {
+	public Commune(String nom, String codePostal, int population) {
 		this.nom = nom;
 		this.codePostal = codePostal;
+		this.population = population;
 	}
 
 	public String getNom() {
@@ -68,8 +71,20 @@ public class Commune implements Serializable {
 		return codePostal.substring(0, 2);
 	}
 	
+	
+	public int getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(int population) {
+		this.population = population;
+	}
+
 	@Override
 	public String toString() {
-		return "Commune [nom=" + nom + ", codePostal=" + codePostal + ", maire=" + maire + "]";
+		return "Commune [codePostal=" + codePostal + ", nom=" + nom + ", maire=" + maire + ", departement="
+				+ departement + ", population=" + population + "]";
 	}
+
+ 
 }

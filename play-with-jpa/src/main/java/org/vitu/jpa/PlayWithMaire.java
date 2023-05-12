@@ -65,7 +65,9 @@ public class PlayWithMaire {
 				String codePostal = readCodePostal(line);
 				String nom = split[3];
 				
-				Commune commune = new Commune(nom, codePostal);
+				int population = Integer.parseInt(split[4]);
+				
+				Commune commune = new Commune(nom, codePostal, population);
 				
 				Commune previousCommune = communes.put(codePostal, commune);
 				if (previousCommune != null) {
