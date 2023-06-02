@@ -47,6 +47,25 @@ public class PlayWithNativeQueries {
 			System.out.println("Nom : " + nom + " - " + population + " habitants.");
 		}
 		
+		String sql03 = "select nom, population from Commune where population > ?1";
+		Query query03 = entityManager.createNativeQuery(sql03);
+		query03.setParameter(1, 250000);
+		List result03 = query03.getResultList();
+		
+		System.out.println("# resultats : " + result03.size());
+		
+		for (Object[] line : (List<Object[]>)result03) {
+//			System.out.println("0 : " + line[0].getClass());
+//			System.out.println("1 : " + line[1].getClass());
+			String nom = (String)line[0];
+			int population = (int)line[1];
+			System.out.println("Nom : " + nom + " - " + population + " habitants.");
+		}
+		
+		String sql04 = "select d.nom, sum(c.population) from Departement d join Commune c on d.codeDepartement = c.departement_codeDepartement group by d.nom";
+		Query query04 = entityManager.createNativeQuery(sql04);
+		List<Object[]> resultList = query04.getResultList();
+		resultList.forEach(tab -> System.out.println(tab[0] + " -> " + tab[1]));
 		
 //		int count = (int)query00.getSingleResult();
 //		Class class1 = singleResult00.getClass();
